@@ -3,592 +3,572 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رصد الهجمات الإيرانية</title>
+<title>رصد المقذوفات الإيرانية — مارس ٢٠٢٦</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg:#07090d; --s1:#0e1118; --s2:#141820; --s3:#1b2030;
-  --bd:rgba(255,255,255,.07); --bd2:rgba(255,255,255,.14);
-  --red:#e63946; --amber:#f4a261; --teal:#4cc9f0;
-  --green:#57cc99; --purple:#a78bfa; --blue:#378ADD;
-  --muted:#6b7788; --text:#dde4f0;
+  --bg: #06080c;
+  --s1: #0c0f17;
+  --s2: #111520;
+  --bd: rgba(255,255,255,.06);
+  --bd2: rgba(255,255,255,.12);
+  --red: #e63946;
+  --amber: #f4a261;
+  --teal: #4cc9f0;
+  --green: #4ade80;
+  --blue: #378add;
+  --muted: #5a6578;
+  --text: #dde4f0;
+  --sub: #8896a8;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Arabic',sans-serif;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(230,57,70,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(230,57,70,.03) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0;}
-.z{position:relative;z-index:1;}
-.wrap{max-width:1380px;margin:0 auto;padding:0 24px;}
 
-/* HEADER */
-header{position:sticky;top:0;z-index:200;background:rgba(7,9,13,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--bd);}
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:13px 0;}
-.brand{display:flex;align-items:center;gap:12px;}
-.diamond{width:28px;height:28px;background:var(--red);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);animation:pd 2.5s ease-in-out infinite;flex-shrink:0;}
-@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.83)}}
-.brand h1{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;}
-.brand p{font-size:10px;color:var(--muted);}
-.live-pill{display:flex;align-items:center;gap:6px;background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.3);border-radius:100px;padding:5px 13px;font-size:11px;font-weight:600;color:var(--red);letter-spacing:1px;}
-.ld{width:6px;height:6px;border-radius:50%;background:var(--red);animation:bk 1.4s ease-in-out infinite;}
-@keyframes bk{0%,100%{opacity:1}50%{opacity:.08}}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* HERO */
-.hero{padding:46px 0 28px;text-align:center;}
-.hero-sup{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-.mega{font-family:'Bebas Neue',sans-serif;font-size:clamp(72px,10vw,136px);line-height:1;background:linear-gradient(148deg,#fff 10%,var(--red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-size:12px;color:var(--muted);margin-top:6px;}
-.hero-sub strong{color:var(--red);}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* AXIS WRAPPER */
-.axis-wrap{border-radius:16px;border:1px solid;margin:28px 0;overflow:hidden;}
-.axis-wrap.ax-a{border-color:rgba(230,57,70,.22);}
-.axis-wrap.ax-b{border-color:rgba(55,138,221,.22);}
-.axis-top{padding:18px 24px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.ax-a .axis-top{background:rgba(230,57,70,.07);}
-.ax-b .axis-top{background:rgba(55,138,221,.07);}
-.axis-top h2{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;margin-bottom:3px;}
-.ax-a .axis-top h2{color:var(--red);}
-.ax-b .axis-top h2{color:var(--blue);}
-.axis-top p{font-size:11px;color:var(--muted);}
-.axis-nums{display:flex;gap:7px;flex-wrap:wrap;}
-.an{display:flex;flex-direction:column;gap:1px;background:rgba(0,0,0,.35);border-radius:10px;padding:8px 13px;min-width:76px;text-align:center;}
-.an-v{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;}
-.an-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
-.an.r .an-v{color:var(--red);}
-.an.a .an-v{color:var(--amber);}
-.an.t .an-v{color:var(--teal);}
-.an.g .an-v{color:var(--green);}
-.an.w .an-v{color:var(--text);}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(230,57,70,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(230,57,70,.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
 
-/* SUB-SECTION DIVIDER */
-.sub-div{display:flex;align-items:center;border-top:1px solid var(--bd);}
-.sub-div-label{padding:9px 24px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap;flex-shrink:0;}
-.sub-div-accent{flex:1;height:1px;}
-.sub-div.israel .sub-div-label{color:var(--teal);}
-.sub-div.israel .sub-div-accent{background:linear-gradient(90deg,rgba(76,201,240,.3),transparent);}
-.sub-div.ratio-sec .sub-div-label{color:var(--red);}
-.sub-div.ratio-sec .sub-div-accent{background:linear-gradient(90deg,rgba(230,57,70,.3),transparent);}
-.sub-div.gulf .sub-div-label{color:var(--amber);}
-.sub-div.gulf .sub-div-accent{background:linear-gradient(90deg,rgba(244,162,97,.3),transparent);}
-.sub-div.b-targets .sub-div-label{color:var(--blue);}
-.sub-div.b-targets .sub-div-accent{background:linear-gradient(90deg,rgba(55,138,221,.3),transparent);}
+.z { position: relative; z-index: 1; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-/* BIG TWO CARDS */
-.big-two{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bd);}
-@media(max-width:680px){.big-two{grid-template-columns:1fr;}}
-.big-card{background:var(--s1);padding:24px;position:relative;overflow:hidden;transition:background .2s;}
-.big-card:hover{background:var(--s2);}
-.big-card::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;}
-.big-card.israel::before{background:radial-gradient(circle at 20% 50%,var(--teal),transparent 60%);}
-.big-card.usa::before{background:radial-gradient(circle at 80% 50%,var(--red),transparent 60%);}
-.bc-flag{font-size:36px;margin-bottom:10px;}
-.bc-name{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;margin-bottom:16px;}
-.bc-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-.bc-stat{background:var(--s2);border-radius:10px;padding:11px 12px;}
-.bc-stat-v{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
-.bc-stat-l{font-size:10px;color:var(--muted);margin-top:2px;}
-.bc-stat.r .bc-stat-v{color:var(--red);}
-.bc-stat.a .bc-stat-v{color:var(--amber);}
-.bc-stat.t .bc-stat-v{color:var(--teal);}
-.bc-stat.g .bc-stat-v{color:var(--green);}
-.bc-foot{padding-top:13px;border-top:1px solid var(--bd2);display:flex;justify-content:space-between;align-items:flex-end;}
-.bc-total{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--red);line-height:1;}
-.bc-total-lbl{font-size:11px;color:var(--muted);}
-.bc-badge{font-size:10px;background:rgba(87,204,153,.12);border:1px solid rgba(87,204,153,.28);color:var(--green);border-radius:100px;padding:3px 10px;}
-.bc-note{font-size:10px;color:var(--muted);margin-top:4px;text-align:right;}
+/* ── HEADER ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(6,8,12,.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--bd);
+}
 
-/* ISRAEL+USA SUMMARY */
-.ius-sum{background:rgba(76,201,240,.06);border-top:1px solid rgba(76,201,240,.15);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.ius-label{font-size:10px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;}
-.ius-nums{display:flex;gap:14px;flex-wrap:wrap;}
-.ius-n{text-align:center;}
-.ius-v{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;}
-.ius-l{font-size:9px;color:var(--muted);}
-.ius-n.r .ius-v{color:var(--red);}
-.ius-n.a .ius-v{color:var(--amber);}
-.ius-n.t .ius-v{color:var(--teal);}
-.ius-n.g .ius-v{color:var(--green);}
+.hdr {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
 
-/* ═══ RATIO SECTION ═══ */
-.ratio-section{padding:22px 24px;background:rgba(230,57,70,.04);}
-.ratio-split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-@media(max-width:680px){.ratio-split{grid-template-columns:1fr;}}
-.rs-card{border-radius:12px;padding:16px 18px;border:1px solid;}
-.rs-card.rc-israel{background:rgba(55,138,221,.08);border-color:rgba(55,138,221,.25);}
-.rs-card.rc-gulf{background:rgba(244,162,97,.08);border-color:rgba(244,162,97,.25);}
-.rs-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
-.rs-name{font-size:12px;font-weight:600;}
-.rc-israel .rs-name{color:var(--teal);}
-.rc-gulf .rs-name{color:var(--amber);}
-.rs-pct{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
-.rc-israel .rs-pct{color:var(--teal);}
-.rc-gulf .rs-pct{color:var(--amber);}
-.rs-total{font-size:11px;color:var(--muted);margin-top:2px;}
-.rs-breakdown{font-size:11px;color:var(--muted);line-height:1.75;padding-top:10px;border-top:1px solid var(--bd);}
+.brand { display: flex; align-items: center; gap: 10px; }
 
-/* BAR */
-.ratio-bar-wrap{margin-bottom:16px;}
-.rb-track{height:32px;border-radius:10px;overflow:hidden;display:flex;}
-.rb-israel{background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#E6F1FB;transition:width 1.3s cubic-bezier(.34,1.1,.64,1);white-space:nowrap;overflow:hidden;padding:0 8px;}
-.rb-gulf{background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#412402;transition:width 1.3s cubic-bezier(.34,1.1,.64,1);white-space:nowrap;overflow:hidden;padding:0 8px;}
-.rb-labels{display:flex;justify-content:space-between;margin-top:8px;}
-.rb-lbl{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
-.rb-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.pulse {
+  width: 10px; height: 10px;
+  background: var(--red);
+  border-radius: 50%;
+  position: relative; flex-shrink: 0;
+}
+.pulse::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--red);
+  opacity: .4;
+  animation: rp 2s ease-out infinite;
+}
+@keyframes rp { 0% { transform:scale(1); opacity:.4; } 100% { transform:scale(2.4); opacity:0; } }
 
-/* RATIO SUMMARY */
-.ratio-summary{background:var(--s2);border:1px solid var(--bd2);border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.rs-sum-item{text-align:center;}
-.rs-sum-val{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;}
-.rs-sum-lbl{font-size:10px;color:var(--muted);margin-top:2px;}
-.rs-sum-item.ii .rs-sum-val{color:var(--teal);}
-.rs-sum-item.gg .rs-sum-val{color:var(--amber);}
-.rs-sum-item.tt .rs-sum-val{color:var(--text);}
-.vdiv{width:1px;height:38px;background:var(--bd2);}
-.ratio-big-num{text-align:center;}
-.rbn-val{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);}
-.rbn-lbl{font-size:10px;color:var(--muted);}
+.brand h1 { font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:2px; }
+.brand p { font-size:9px; color:var(--muted); letter-spacing:1px; margin-top:1px; }
 
-/* GULF GRID */
-.gulf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);}
-@media(max-width:700px){.gulf-grid{grid-template-columns:1fr 1fr;}}
-.gc{background:var(--s1);padding:17px 15px;transition:background .2s;}
-.gc:hover{background:var(--s2);}
-.gc-flag{font-size:22px;margin-bottom:7px;}
-.gc-name{font-size:12px;font-weight:600;margin-bottom:11px;}
-.gc-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd);}
-.gc-row:last-of-type{border-bottom:none;}
-.gc-lbl{font-size:10px;color:var(--muted);}
-.gc-val{font-family:'Bebas Neue',sans-serif;font-size:17px;line-height:1;}
-.gc-val.r{color:var(--red);}
-.gc-val.a{color:var(--amber);}
-.gc-val.t{color:var(--teal);}
-.gc-val.g{color:var(--green);}
-.gc-foot{margin-top:9px;padding-top:8px;border-top:2px solid var(--bd2);display:flex;justify-content:space-between;align-items:baseline;}
-.gc-total{font-family:'Bebas Neue',sans-serif;font-size:28px;}
-.gc-rate{font-size:9px;color:var(--green);}
-.gc-empty{padding:16px 0;text-align:center;color:var(--muted);font-size:11px;}
+.hdr-right { display:flex; align-items:center; gap:14px; }
 
-/* GULF SUMMARY */
-.gulf-sum{background:rgba(244,162,97,.05);border-top:1px solid rgba(244,162,97,.15);padding:13px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.gulf-sum-label{font-size:10px;color:var(--amber);letter-spacing:2px;text-transform:uppercase;}
-.gulf-nums{display:flex;gap:14px;flex-wrap:wrap;}
-.gn{text-align:center;}
-.gn-v{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;}
-.gn-l{font-size:9px;color:var(--muted);}
-.gn.r .gn-v{color:var(--red);}
-.gn.a .gn-v{color:var(--amber);}
-.gn.t .gn-v{color:var(--teal);}
-.gn.g .gn-v{color:var(--green);}
-.gn.w .gn-v{color:var(--text);}
+.day-counter {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:13px; letter-spacing:1px;
+  color: var(--amber);
+  background: rgba(244,162,97,.08);
+  border: 1px solid rgba(244,162,97,.2);
+  border-radius:6px; padding:4px 10px;
+}
 
-/* AXIS B */
-.b-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);}
-@media(max-width:700px){.b-grid{grid-template-columns:1fr 1fr;}}
-.bc-b{background:var(--s1);padding:19px 15px;transition:background .2s;}
-.bc-b:hover{background:var(--s2);}
-.bc-b-flag{font-size:23px;margin-bottom:6px;}
-.bc-b-name{font-size:12px;font-weight:600;margin-bottom:13px;}
-.bc-b-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--bd);}
-.bc-b-row:last-of-type{border-bottom:none;}
-.bc-b-lbl{font-size:10px;color:var(--muted);}
-.bc-b-val{font-family:'Bebas Neue',sans-serif;font-size:19px;line-height:1;}
-.bc-b-val.r{color:var(--red);}
-.bc-b-val.a{color:var(--amber);}
-.bc-b-val.t{color:var(--teal);}
-.bc-b-foot{margin-top:11px;padding-top:9px;border-top:2px solid var(--bd2);}
-.bc-b-total{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;}
-.bc-b-note{font-size:9px;color:var(--amber);margin-top:3px;}
+.since-date { font-size:9px; color:var(--muted); letter-spacing:.5px; }
 
-/* CHARTS */
-.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0;}
-@media(max-width:760px){.chart-row{grid-template-columns:1fr;}}
-.ch-box{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:18px;}
-.ch-lbl{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;}
+.live-pill {
+  display:flex; align-items:center; gap:5px;
+  background: rgba(230,57,70,.1);
+  border: 1px solid rgba(230,57,70,.3);
+  border-radius:100px; padding:4px 10px;
+  font-size:10px; font-weight:700;
+  color:var(--red); letter-spacing:1.5px;
+  margin-right: 4px;
+}
+.live-dot {
+  width:5px; height:5px;
+  border-radius:50%; background:var(--red);
+  animation: bk 1.4s ease-in-out infinite;
+}
+@keyframes bk { 0%,100%{opacity:1} 50%{opacity:.1} }
 
-.disc{background:rgba(244,162,97,.05);border:1px solid rgba(244,162,97,.17);border-radius:12px;padding:12px 18px;font-size:11px;color:var(--amber);margin:20px 0;line-height:1.65;}
-footer{border-top:1px solid var(--bd);padding:16px 0;text-align:center;font-size:11px;color:var(--muted);}
+/* ── HERO ── */
+.hero { padding:44px 0 28px; text-align:center; }
+
+.hero-eyebrow {
+  font-size:10px; letter-spacing:3px;
+  text-transform:uppercase; color:var(--muted); margin-bottom:8px;
+}
+
+.grand-total {
+  font-family:'Bebas Neue',sans-serif;
+  font-size: clamp(88px,14vw,168px);
+  line-height:1;
+  background: linear-gradient(150deg,#fff 0%,var(--red) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: fadeUp .8s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.hero-label { font-size:13px; color:var(--sub); margin-top:6px; }
+.hero-label strong { color:var(--red); }
+
+/* ── SPLIT BAR ── */
+.split-section { padding:20px 0 32px; }
+
+.split-bar-wrap {
+  background: var(--s2);
+  border: 1px solid var(--bd);
+  border-radius:100px;
+  height:10px;
+  overflow:hidden;
+  position:relative;
+}
+
+/* RTL: gulf (red) from RIGHT, israel (blue) from LEFT — no overlap */
+.bar-gulf {
+  position:absolute; top:0; right:0;
+  height:100%;
+  background: linear-gradient(270deg,#e63946,#c1121f);
+  border-radius:100px;
+  transition: width 1.5s cubic-bezier(.4,0,.2,1);
+}
+.bar-israel {
+  position:absolute; top:0; left:0;
+  height:100%;
+  background: linear-gradient(90deg,#1d5fa3,#378add);
+  border-radius:100px;
+  transition: width 1.5s cubic-bezier(.4,0,.2,1);
+}
+
+/* pct labels on bar */
+.split-labels {
+  display:flex; justify-content:space-between;
+  margin-top:14px;
+}
+
+.split-side { text-align:center; }
+
+.split-pct-big {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:52px; line-height:1;
+}
+.split-pct-big.red { color:var(--red); }
+.split-pct-big.blue { color:var(--blue); }
+
+.split-name {
+  font-size:11px; color:var(--sub);
+  margin-top:2px; letter-spacing:.5px;
+}
+
+.split-num-small {
+  font-size:13px; color:var(--muted);
+  margin-top:2px;
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:1px;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height:1px;
+  background: linear-gradient(90deg,transparent,var(--bd2),transparent);
+  margin:4px 0 28px;
+}
+
+/* ── SECTION TITLE ── */
+.sec-title-block {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.sec-title-main {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px; letter-spacing:2px;
+}
+
+.sec-title-main.green { color:var(--green); }
+.sec-title-main.blue { color:var(--blue); }
+
+.sec-title-sub {
+  font-size:11px; color:var(--muted);
+  margin-top:3px; letter-spacing:1px;
+}
+
+.sec-total-line {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px; margin-top:6px;
+}
+.sec-total-line.red { color:var(--red); }
+.sec-total-line.blue { color:var(--blue); }
+
+/* ── COUNTRY GRID ── */
+.country-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(190px,1fr));
+  gap:10px;
+  margin-bottom:32px;
+}
+
+.c-card {
+  background: var(--s1);
+  border:1px solid var(--bd);
+  border-radius:12px;
+  padding:16px 18px;
+  animation: fadeUp .6s ease both;
+  transition: border-color .2s, transform .2s;
+}
+.c-card:hover { border-color:var(--bd2); transform:translateY(-2px); }
+
+.c-card.blue-card {
+  background: rgba(55,138,221,.04);
+  border-color: rgba(55,138,221,.18);
+}
+
+.c-top {
+  display:flex; align-items:flex-start;
+  gap:8px; margin-bottom:12px;
+}
+
+.c-flag { font-size:20px; line-height:1; margin-top:2px; }
+
+.c-names {}
+.c-name-ar { font-size:13px; font-weight:600; color:var(--text); }
+.c-name-en { font-size:9px; color:var(--muted); letter-spacing:.5px; margin-top:1px; }
+
+.c-total {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px; line-height:1;
+  margin-bottom:6px;
+}
+.c-total.red { color:var(--red); }
+.c-total.blue { color:var(--blue); }
+
+.c-label { font-size:9px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+
+/* combined israel+us card */
+.c-card.combined {
+  grid-column: span 2;
+  background: rgba(55,138,221,.04);
+  border-color: rgba(55,138,221,.18);
+}
+
+.combined-inner {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin-top:12px;
+}
+
+.combined-part {}
+.combined-flag-name {
+  display:flex; align-items:center;
+  gap:6px; margin-bottom:8px;
+}
+.combined-total {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:36px; line-height:1; color:var(--blue);
+}
+.combined-lbl { font-size:9px; color:var(--muted); margin-top:2px; letter-spacing:.5px; }
+
+.combined-divider {
+  width:1px; background:var(--bd);
+  align-self:stretch;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top:1px solid var(--bd);
+  padding:16px 0; margin-top:10px;
+}
+
+.footer-inner {
+  display:flex; justify-content:space-between;
+  align-items:center; flex-wrap:wrap; gap:8px;
+}
+
+.footer-note { font-size:9px; color:var(--muted); }
+.footer-src { font-size:9px; color:var(--muted); }
+.footer-src strong { color:var(--red); }
 </style>
 </head>
 <body>
 
 <header>
-<div class="wrap z">
-<div class="hdr">
-  <div class="brand">
-    <div class="diamond"></div>
-    <div>
-      <h1>IRAN ATTACK TRACKER</h1>
-      <p>رصد الهجمات الإيرانية وميليشياتها — بيانات موثقة</p>
+  <div class="wrap z hdr">
+    <div class="brand">
+      <div class="pulse"></div>
+      <div>
+        <h1>رصد المقذوفات الإيرانية</h1>
+        <p>IRAN PROJECTILE TRACKER · منذ ٢٨ فبراير ٢٠٢٦</p>
+      </div>
+      <div class="live-pill"><span class="live-dot"></span>LIVE</div>
+    </div>
+    <div class="hdr-right">
+      <div class="day-counter" id="day-counter">اليوم —</div>
+      <div class="since-date">منذ 28 Feb 2026</div>
     </div>
   </div>
-  <div class="live-pill"><div class="ld"></div>مباشر · مارس ٢٠٢٦</div>
-</div>
-</div>
 </header>
 
-<div class="wrap z">
+<main class="wrap z">
 
-<div class="hero">
-  <div class="hero-sup">إجمالي القذائف — المحوران معاً</div>
-  <div class="mega" id="hero-num">0</div>
-  <div class="hero-sub">بيانات موثقة وتجريبية · <strong>مارس ٢٠٢٦</strong></div>
-</div>
-
-
-<!-- ══════ المحور الأول ══════ -->
-<div class="axis-wrap ax-a">
-
-  <div class="axis-top">
-    <div>
-      <h2>🇮🇷 المحور الأول — إيران وميليشياتها</h2>
-      <p>ما أُطلق من إيران وميليشياتها باتجاه دول المنطقة · يشمل الصواريخ والمسيّرات وما تم اعتراضه</p>
-    </div>
-    <div class="axis-nums">
-      <div class="an r"><div class="an-v" id="a1-bal">0</div><div class="an-l">باليستية</div></div>
-      <div class="an a"><div class="an-v" id="a1-cru">0</div><div class="an-l">كروز</div></div>
-      <div class="an t"><div class="an-v" id="a1-dr">0</div><div class="an-l">مسيّرات</div></div>
-      <div class="an g"><div class="an-v" id="a1-int">0</div><div class="an-l">معترضة</div></div>
-      <div class="an w"><div class="an-v" id="a1-tot">0</div><div class="an-l">الإجمالي</div></div>
-    </div>
+  <!-- GRAND TOTAL -->
+  <div class="hero">
+    <div class="hero-eyebrow">إجمالي المقذوفات الإيرانية — جميع الأهداف</div>
+    <div class="grand-total" id="grand-total">0</div>
+    <div class="hero-label">مقذوف أطلقته إيران وميليشياتها منذ <strong>٢٨ فبراير ٢٠٢٦</strong></div>
   </div>
 
-  <!-- ═══ قسم النسبة ═══ -->
-  <div class="sub-div ratio-sec">
-    <div class="sub-div-label">نسبة التوزيع — إسرائيل مقابل الخليج/أخرى</div>
-    <div class="sub-div-accent"></div>
-  </div>
-
-  <div class="ratio-section">
-    <div class="ratio-split">
-      <div class="rs-card rc-israel">
-        <div class="rs-head">
-          <div>
-            <div class="rs-name">🇮🇱 إسرائيل</div>
-            <div class="rs-total">إجمالي: 865+ قذيفة</div>
-          </div>
-          <div class="rs-pct" id="rs-pct-israel">0%</div>
-        </div>
-        <div class="rs-breakdown">
-          باليستية: 365 &nbsp;·&nbsp; مسيّرات: 500+<br>
-          اعتُرض: 270 باليستية &nbsp;·&nbsp; سقط: 95
-        </div>
+  <!-- SPLIT BAR -->
+  <div class="split-section">
+    <div class="split-bar-wrap">
+      <div class="bar-israel" id="bar-israel" style="width:0%"></div>
+      <div class="bar-gulf" id="bar-gulf" style="width:0%"></div>
+    </div>
+    <div class="split-labels">
+      <div class="split-side" style="text-align:right">
+        <div class="split-pct-big red" id="gulf-pct">0%</div>
+        <div class="split-name">دول مجلس التعاون الخليجي والأردن · GCC & Jordan</div>
+        <div class="split-num-small" id="gulf-num">—</div>
       </div>
-      <div class="rs-card rc-gulf">
-        <div class="rs-head">
-          <div>
-            <div class="rs-name">🛡️ الخليج · الأردن · أخرى</div>
-            <div class="rs-total">إجمالي: <span id="rs-gulf-tot">0</span> قذيفة</div>
-          </div>
-          <div class="rs-pct" id="rs-pct-gulf">0%</div>
-        </div>
-        <div class="rs-breakdown">
-          باليستية: <span id="rs-g-bal">0</span> &nbsp;·&nbsp;
-          كروز: <span id="rs-g-cru">0</span> &nbsp;·&nbsp;
-          مسيّرات: <span id="rs-g-dr">0</span><br>
-          معترضة: <span id="rs-g-int">0</span> &nbsp;·&nbsp;
-          نسبة الاعتراض: <span id="rs-g-rate">—</span>
+      <div class="split-side" style="text-align:left">
+        <div class="split-pct-big blue" id="israel-pct">0%</div>
+        <div class="split-name">إسرائيل والقواعد الأمريكية · Israel & US Bases</div>
+        <div class="split-num-small" id="israel-num">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GCC SECTION -->
+  <div class="sec-title-block">
+    <div class="sec-title-main green">دول مجلس التعاون الخليجي والأردن</div>
+    <div class="sec-title-sub">GCC STATES & JORDAN</div>
+    <div class="sec-total-line red" id="gulf-sec-total">إجمالي: —</div>
+  </div>
+
+  <div class="country-grid">
+
+    <div class="c-card" style="animation-delay:.05s">
+      <div class="c-top">
+        <span class="c-flag">🇸🇦</span>
+        <div class="c-names">
+          <div class="c-name-ar">السعودية</div>
+          <div class="c-name-en">Saudi Arabia</div>
         </div>
       </div>
+      <div class="c-total red" id="sa-total">0</div>
+      <div class="c-label">مقذوف</div>
     </div>
 
-    <div class="ratio-bar-wrap">
-      <div class="rb-track">
-        <div class="rb-israel" id="rb-israel" style="width:0%">إسرائيل / أمريكا</div>
-        <div class="rb-gulf"   id="rb-gulf"   style="width:0%">الخليج / أخرى</div>
-      </div>
-      <div class="rb-labels">
-        <div class="rb-lbl"><div class="rb-dot" style="background:var(--blue)"></div>إسرائيل والأمريكا · <strong id="rb-lbl-i">—</strong></div>
-        <div class="rb-lbl"><div class="rb-dot" style="background:var(--amber)"></div>الخليج والأردن وأخرى · <strong id="rb-lbl-g">—</strong></div>
-      </div>
-    </div>
-
-    <div class="ratio-summary">
-      <div class="rs-sum-item ii"><div class="rs-sum-val">865+</div><div class="rs-sum-lbl">إسرائيل</div></div>
-      <div class="vdiv"></div>
-      <div class="ratio-big-num">
-        <div class="rbn-val" id="rbn-val">—</div>
-        <div class="rbn-lbl">النسبة (إسرائيل : الخليج)</div>
-      </div>
-      <div class="vdiv"></div>
-      <div class="rs-sum-item gg"><div class="rs-sum-val" id="rs-gulf-sum">0</div><div class="rs-sum-lbl">الخليج + الأردن + أخرى</div></div>
-      <div class="vdiv"></div>
-      <div class="rs-sum-item tt"><div class="rs-sum-val" id="rs-grand-tot">0</div><div class="rs-sum-lbl">إجمالي المحور الأول</div></div>
-    </div>
-  </div>
-
-    <div class="sub-div israel">
-    <div class="sub-div-label">القسم الأول — إسرائيل</div>
-    <div class="sub-div-accent"></div>
-  </div>
-
-  <div style="padding:0 1px">
-    <div class="big-card israel" style="border-radius:0">
-      <div class="bc-flag">🇮🇱</div>
-      <div class="bc-name">إسرائيل</div>
-      <div class="bc-stats">
-        <div class="bc-stat r"><div class="bc-stat-v">365</div><div class="bc-stat-l">باليستية أُطلقت</div></div>
-        <div class="bc-stat t"><div class="bc-stat-v">500+</div><div class="bc-stat-l">مسيّرات أُطلقت</div></div>
-        <div class="bc-stat g"><div class="bc-stat-v">270</div><div class="bc-stat-l">باليستية اعتُرضت</div></div>
-        <div class="bc-stat" style="background:rgba(230,57,70,.15)"><div class="bc-stat-v" style="color:#e63946">95</div><div class="bc-stat-l">باليستية سقطت</div></div>
-      </div>
-      <div class="bc-foot">
-        <div><div class="bc-total">865+</div><div class="bc-total-lbl">إجمالي القذائف</div></div>
-        <div style="text-align:left">
-          <div class="bc-badge">✓ اعتُرض ~74% باليستية</div>
-          <div class="bc-note">موثق IDF · حتى ٢١ مارس ٢٠٢٦</div>
+    <div class="c-card" style="animation-delay:.10s">
+      <div class="c-top">
+        <span class="c-flag">🇰🇼</span>
+        <div class="c-names">
+          <div class="c-name-ar">الكويت</div>
+          <div class="c-name-en">Kuwait</div>
         </div>
       </div>
+      <div class="c-total red" id="kw-total">0</div>
+      <div class="c-label">مقذوف</div>
     </div>
-  </div>
 
-  <div class="ius-sum">
-    <div class="ius-label">إجمالي — إسرائيل</div>
-    <div class="ius-nums">
-      <div class="ius-n r"><div class="ius-v">365</div><div class="ius-l">باليستية</div></div>
-      <div class="ius-n t"><div class="ius-v">500+</div><div class="ius-l">مسيّرات</div></div>
-      <div class="ius-n g"><div class="ius-v">270</div><div class="ius-l">اعتُرضت</div></div>
-      <div class="ius-n" style="color:var(--red);border-right:1px solid var(--bd2);padding-left:14px;margin-left:4px">
-        <div class="ius-v" style="color:#e63946">95</div><div class="ius-l">سقطت</div>
+    <div class="c-card" style="animation-delay:.15s">
+      <div class="c-top">
+        <span class="c-flag">🇦🇪</span>
+        <div class="c-names">
+          <div class="c-name-ar">الإمارات</div>
+          <div class="c-name-en">UAE</div>
+        </div>
       </div>
-      <div class="ius-n">
-        <div class="ius-v" style="color:var(--text)">865+</div><div class="ius-l">إجمالي</div>
+      <div class="c-total red" id="ae-total">0</div>
+      <div class="c-label">مقذوف</div>
+    </div>
+
+    <div class="c-card" style="animation-delay:.20s">
+      <div class="c-top">
+        <span class="c-flag">🇧🇭</span>
+        <div class="c-names">
+          <div class="c-name-ar">البحرين</div>
+          <div class="c-name-en">Bahrain</div>
+        </div>
       </div>
+      <div class="c-total red" id="bh-total">0</div>
+      <div class="c-label">مقذوف</div>
     </div>
-  </div>
 
-  <!-- القسم الثاني: الخليج + الأردن + أخرى -->
-  <div class="sub-div gulf">
-    <div class="sub-div-label">القسم الثاني — دول الخليج · الأردن · أخرى</div>
-    <div class="sub-div-accent"></div>
-  </div>
-
-  <div class="gulf-grid" id="gulf-grid"></div>
-
-  <div class="gulf-sum">
-    <div class="gulf-sum-label">إجمالي — دول الخليج والأردن وأخرى مجتمعةً</div>
-    <div class="gulf-nums">
-      <div class="gn r"><div class="gn-v" id="gsum-bal">0</div><div class="gn-l">باليستية</div></div>
-      <div class="gn a"><div class="gn-v" id="gsum-cru">0</div><div class="gn-l">كروز</div></div>
-      <div class="gn t"><div class="gn-v" id="gsum-dr">0</div><div class="gn-l">مسيّرات</div></div>
-      <div class="gn g"><div class="gn-v" id="gsum-int">0</div><div class="gn-l">معترضة</div></div>
-      <div class="gn w" style="border-right:1px solid var(--bd2);padding-left:14px;margin-left:4px">
-        <div class="gn-v" id="gsum-tot">0</div><div class="gn-l">إجمالي</div>
+    <div class="c-card" style="animation-delay:.25s">
+      <div class="c-top">
+        <span class="c-flag">🇶🇦</span>
+        <div class="c-names">
+          <div class="c-name-ar">قطر</div>
+          <div class="c-name-en">Qatar</div>
+        </div>
       </div>
+      <div class="c-total red" id="qa-total">0</div>
+      <div class="c-label">مقذوف</div>
+    </div>
+
+    <div class="c-card" style="animation-delay:.30s">
+      <div class="c-top">
+        <span class="c-flag">🇴🇲</span>
+        <div class="c-names">
+          <div class="c-name-ar">عُمان</div>
+          <div class="c-name-en">Oman</div>
+        </div>
+      </div>
+      <div class="c-total red" id="om-total">0</div>
+      <div class="c-label">مقذوف</div>
+    </div>
+
+    <div class="c-card" style="animation-delay:.35s">
+      <div class="c-top">
+        <span class="c-flag">🇯🇴</span>
+        <div class="c-names">
+          <div class="c-name-ar">الأردن</div>
+          <div class="c-name-en">Jordan</div>
+        </div>
+      </div>
+      <div class="c-total red" id="jo-total">0</div>
+      <div class="c-label">مقذوف</div>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ISRAEL + US SECTION -->
+  <div class="sec-title-block">
+    <div class="sec-title-main blue">إسرائيل والقواعد الأمريكية</div>
+    <div class="sec-title-sub">ISRAEL & US BASES</div>
+    <div class="sec-total-line blue" id="israel-sec-total">إجمالي: —</div>
+  </div>
+
+  <div class="country-grid">
+    <div class="c-card combined blue-card" style="animation-delay:.05s">
+      <div class="c-top">
+        <span class="c-flag">🇮🇱</span>
+        <span class="c-flag" style="margin-right:-6px">🇺🇸</span>
+        <div class="c-names" style="margin-right:6px">
+          <div class="c-name-ar">إسرائيل والقواعد الأمريكية</div>
+          <div class="c-name-en">Israel & US Bases · IDF / CENTCOM</div>
+        </div>
+      </div>
+      <div class="c-total blue" id="il-us-total">0</div>
+      <div class="c-label">مقذوف — إجمالي الهجمات على إسرائيل والقواعد الأمريكية</div>
     </div>
   </div>
 
-</div><!-- /axis-a -->
+</main>
 
-
-<!-- ══════ المحور الثاني ══════ -->
-<div class="axis-wrap ax-b">
-  <div class="axis-top">
-    <div>
-      <h2>🇺🇸🇮🇱 المحور الثاني — أمريكا وإسرائيل</h2>
-      <p>ما أُطلق من أمريكا وإسرائيل على إيران واليمن والعراق ولبنان · صواريخ وقنابل ومسيّرات فقط</p>
-    </div>
-    <div class="axis-nums">
-      <div class="an r"><div class="an-v" id="a2-mis">0</div><div class="an-l">صواريخ</div></div>
-      <div class="an a"><div class="an-v" id="a2-bom">0</div><div class="an-l">قنابل</div></div>
-      <div class="an t"><div class="an-v" id="a2-dr">0</div><div class="an-l">مسيّرات</div></div>
-      <div class="an w"><div class="an-v" id="a2-tot">0</div><div class="an-l">الإجمالي</div></div>
-    </div>
+<footer>
+  <div class="wrap z footer-inner">
+    <div class="footer-note">⚠ تم بذل العناية اللازمة للحصول على أدق المعلومات — البيانات من الجهات الرسمية</div>
+    <div class="footer-src">المصادر: <strong>@modgovksa · @modgovae · @mod_qatar · @bdf_bahrain · @kuwaitarmyghq · @mg_mod_oman · petra.gov.jo · IDF · CENTCOM</strong></div>
   </div>
-  <div class="sub-div b-targets">
-    <div class="sub-div-label">الدول المستهدفة</div>
-    <div class="sub-div-accent"></div>
-  </div>
-  <div class="b-grid" id="b-grid"></div>
-</div>
-
-
-<!-- CHARTS -->
-<div class="chart-row">
-  <div class="ch-box">
-    <div class="ch-lbl">المحور الأول — التسلسل الزمني (أحداث الخليج)</div>
-    <div style="position:relative;height:200px"><canvas id="ch-time"></canvas></div>
-  </div>
-  <div class="ch-box">
-    <div class="ch-lbl">مقارنة إجماليات المحورين</div>
-    <div style="display:flex;gap:10px;margin-bottom:10px;font-size:11px;flex-wrap:wrap;">
-      <span style="display:flex;align-items:center;gap:4px;color:var(--muted)"><span style="width:9px;height:9px;border-radius:2px;background:#e63946;display:inline-block"></span>إيران وميليشياتها</span>
-      <span style="display:flex;align-items:center;gap:4px;color:var(--muted)"><span style="width:9px;height:9px;border-radius:2px;background:#378ADD;display:inline-block"></span>أمريكا وإسرائيل</span>
-    </div>
-    <div style="position:relative;height:170px"><canvas id="ch-compare"></canvas></div>
-  </div>
-</div>
-
-<div class="disc">⚠️ <strong>إخلاء مسؤولية:</strong> الأرقام المُعلَّمة بـ (تجريبي) هي أرقام افتراضية للعرض فقط. بيانات الخليج من مارس ٢٠٢٦ موثقة من مصادر معتمدة.</div>
-
-</div>
-<footer><div class="wrap">Iran Attack Tracker · للاستخدام الإعلامي والتوثيقي فقط · ٢١ مارس ٢٠٢٦</div></footer>
+</footer>
 
 <script>
-const GULF_DATA = [
-  { flag:'🇸🇦', name:'السعودية',  color:'#2dc653', bal:45,  cru:7,  dr:553,  int:605, fell:1,  note:'موثق @modgovksa' },
-  { flag:'🇰🇼', name:'الكويت',    color:'#e63946', bal:212, cru:0,  dr:394,  int:575, fell:31, note:'موثق @kuwaitarmyghq' },
-  { flag:'🇧🇭', name:'البحرين',   color:'#f4a261', bal:139, cru:0,  dr:238,  int:377, fell:0,  note:'موثق @bdf_bahrain' },
-  { flag:'🇶🇦', name:'قطر',       color:'#4cc9f0', bal:101, cru:3,  dr:39,   int:127, fell:18, note:'موثق @mod_qatar' },
-  { flag:'🇦🇪', name:'الإمارات',  color:'#a78bfa', bal:9,   cru:8,  dr:1475, int:1402,fell:90, note:'موثق @modgovae' },
-  { flag:'🇴🇲', name:'عُمان',     color:'#f97316', bal:0,   cru:0,  dr:3,    int:3,   fell:0,  note:'موثق @mg_mod_oman' },
-  { flag:'🇯🇴', name:'الأردن',    color:'#57cc99', bal:0,   cru:5,  dr:20,   int:18,  fell:0,  note:'تجريبي' },
-  { flag:'🌐',  name:'أخرى',     color:'#6b7788', bal:2,   cru:3,  dr:5,    int:0,   fell:0,  note:'تجريبي' },
-];
-
-const AXIS_B = [
-  { flag:'🇮🇷', name:'إيران',  color:'#e63946', missiles:85,  bombs:120, drones:30,  note:'تجريبي' },
-  { flag:'🇾🇪', name:'اليمن', color:'#f4a261', missiles:200, bombs:350, drones:80,  note:'تجريبي' },
-  { flag:'🇮🇶', name:'العراق', color:'#4cc9f0', missiles:60,  bombs:90,  drones:20,  note:'تجريبي' },
-  { flag:'🇱🇧', name:'لبنان', color:'#a78bfa', missiles:300, bombs:800, drones:120, note:'تجريبي' },
-];
-
-const IU_TOT=865, IU_BAL=365, IU_CRU=0, IU_DR=500, IU_INT=270;
-
-function buildGulf() {
-  document.getElementById('gulf-grid').innerHTML = GULF_DATA.map(c => {
-    const total = c.bal+c.cru+c.dr, hasData=total>0;
-    const pct = hasData&&c.int>0 ? Math.round(c.int/total*100) : 0;
-    return `<div class="gc">
-      <div class="gc-flag">${c.flag}</div>
-      <div class="gc-name">${c.name}</div>
-      ${hasData?`
-        <div class="gc-row"><span class="gc-lbl">باليستية</span><span class="gc-val r">${c.bal||'—'}</span></div>
-        <div class="gc-row"><span class="gc-lbl">كروز</span><span class="gc-val a">${c.cru||'—'}</span></div>
-        <div class="gc-row"><span class="gc-lbl">مسيّرات</span><span class="gc-val t">${c.dr||'—'}</span></div>
-        <div class="gc-row"><span class="gc-lbl">معترضة</span><span class="gc-val g">${c.int||'—'}</span></div>
-        <div class="gc-row"><span class="gc-lbl">سقطت</span><span class="gc-val" style="color:${c.fell>0?'#e63946':'var(--muted)'}">${c.fell>0?c.fell:'—'}</span></div>
-        <div class="gc-foot">
-          <div><div class="gc-total" style="color:${c.color}">${total}</div></div>
-          <div style="text-align:left">${pct>0?`<div class="gc-rate">✓ ${pct}%</div>`:''}<div style="font-size:9px;color:var(--muted)">${c.note}</div></div>
-        </div>`
-      :`<div class="gc-empty">لا بيانات</div><div class="gc-foot"><div class="gc-total" style="color:var(--muted)">—</div></div>`}
-    </div>`;
-  }).join('');
+// الأرقام إنجليزية
+function toAr(n) {
+  if (n === null || n === undefined) return '—';
+  return n.toLocaleString('en-US');
 }
 
-function buildAxisB() {
-  document.getElementById('b-grid').innerHTML = AXIS_B.map(c => {
-    const total=c.missiles+c.bombs+c.drones;
-    return `<div class="bc-b">
-      <div class="bc-b-flag">${c.flag}</div>
-      <div class="bc-b-name">${c.name}</div>
-      <div class="bc-b-row"><span class="bc-b-lbl">صواريخ</span><span class="bc-b-val r">${c.missiles}</span></div>
-      <div class="bc-b-row"><span class="bc-b-lbl">قنابل</span><span class="bc-b-val a">${c.bombs}</span></div>
-      <div class="bc-b-row"><span class="bc-b-lbl">مسيّرات</span><span class="bc-b-val t">${c.drones}</span></div>
-      <div class="bc-b-foot">
-        <div class="bc-b-total" style="color:${c.color}">${total}</div>
-        <div class="bc-b-note">${c.note}</div>
-      </div>
-    </div>`;
-  }).join('');
+// ── البيانات ──
+const DATA = {
+  sa: 631,   // 49 bal + 7 cru + 575 dr
+  kw: 766,   // 227 + 539
+  ae: 2093,  // 338 + 15 + 1740
+  bh: 385,   // 143 + 242
+  qa: 267,   // 180 + 87
+  om: 16,    // 16 dr
+  jo: 240,   // 140 + 100
+  il: 865,   // 365 + 500
+  us: 105,   // 25 + 80
+};
+
+const gulfKeys = ['sa','kw','ae','bh','qa','om','jo'];
+const gulfTotal = gulfKeys.reduce((s,k) => s + DATA[k], 0);
+const israelTotal = DATA.il + DATA.us;
+const grandTotal = gulfTotal + israelTotal;
+
+// ── حساب اليوم ──
+const startDate = new Date('2026-02-28');
+const dayNum = Math.floor((Date.now() - startDate) / 86400000) + 1;
+document.getElementById('day-counter').textContent = 'اليوم ' + toAr(dayNum);
+
+// ── animate number ──
+function animateNum(el, target, duration) {
+  if (!el) return;
+  duration = duration || 1200;
+  const start = performance.now();
+  const step = (now) => {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = p < .5 ? 2*p*p : -1+(4-2*p)*p;
+    el.textContent = toAr(Math.round(ease * target));
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 }
 
-function calcAll() {
-  let gBal=0,gCru=0,gDr=0,gInt=0;
-  GULF_DATA.forEach(c=>{gBal+=c.bal;gCru+=c.cru;gDr+=c.dr;gInt+=c.int;});
-  const gTot=gBal+gCru+gDr;
+function setEl(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
 
-  // gulf summary
-  ['gsum-bal','gsum-cru','gsum-dr','gsum-int','gsum-tot'].forEach((id,i)=>{
-    document.getElementById(id).textContent=[gBal,gCru,gDr,gInt,gTot][i];
+// ── render ──
+function render() {
+  // grand total
+  animateNum(document.getElementById('grand-total'), grandTotal, 1600);
+
+  // split bar
+  const gulfPct = Math.round(gulfTotal / grandTotal * 100);
+  const israelPct = 100 - gulfPct;
+
+  setTimeout(() => {
+    document.getElementById('bar-gulf').style.width = gulfPct + '%';
+    document.getElementById('bar-israel').style.width = israelPct + '%';
+  }, 400);
+
+  setEl('gulf-pct', gulfPct + '%');
+  setEl('israel-pct', israelPct + '%');
+  setEl('gulf-num', toAr(gulfTotal) + ' مقذوف');
+  setEl('israel-num', toAr(israelTotal) + ' مقذوف');
+
+  // section totals
+  setEl('gulf-sec-total', 'إجمالي: ' + toAr(gulfTotal) + ' مقذوف');
+  setEl('israel-sec-total', 'إجمالي: ' + toAr(israelTotal) + ' مقذوف');
+
+  // countries
+  const ids = ['sa','kw','ae','bh','qa','om','jo'];
+  ids.forEach(k => {
+    animateNum(document.getElementById(k + '-total'), DATA[k]);
   });
 
-  // axis A total
-  const a1Bal=gBal+IU_BAL, a1Cru=gCru+IU_CRU, a1Dr=gDr+IU_DR, a1Int=gInt+IU_INT;
-  const a1Tot=gTot+IU_TOT;
-  document.getElementById('a1-bal').textContent=a1Bal;
-  document.getElementById('a1-cru').textContent=a1Cru;
-  document.getElementById('a1-dr').textContent=a1Dr;
-  document.getElementById('a1-int').textContent=a1Int;
-  document.getElementById('a1-tot').textContent=a1Tot;
-
-  // RATIO section
-  document.getElementById('rs-gulf-tot').textContent=gTot;
-  document.getElementById('rs-g-bal').textContent=gBal;
-  document.getElementById('rs-g-cru').textContent=gCru;
-  document.getElementById('rs-g-dr').textContent=gDr;
-  document.getElementById('rs-g-int').textContent=gInt;
-  document.getElementById('rs-g-rate').textContent = gTot>0 ? Math.round(gInt/gTot*100)+'%' : '—';
-  document.getElementById('rs-gulf-sum').textContent=gTot;
-  document.getElementById('rs-grand-tot').textContent=a1Tot;
-
-  const iPct=Math.round(IU_TOT/a1Tot*100), gPct=100-iPct;
-
-  function animPct(id,val,dur=1300){
-    const el=document.getElementById(id),t0=performance.now();
-    (function tick(now){const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);
-      el.textContent=Math.round(val*e)+'%';if(p<1)requestAnimationFrame(tick);})(t0);
-  }
-  animPct('rs-pct-israel',iPct);
-  animPct('rs-pct-gulf',gPct);
-
-  setTimeout(()=>{
-    document.getElementById('rb-israel').style.width=iPct+'%';
-    document.getElementById('rb-gulf').style.width=gPct+'%';
-    document.getElementById('rb-lbl-i').textContent=iPct+'%';
-    document.getElementById('rb-lbl-g').textContent=gPct+'%';
-  },300);
-
-  // ratio text
-  function gcd(a,b){return b===0?a:gcd(b,a%b);}
-  const g=gcd(IU_TOT,gTot||1);
-  const r1=Math.round(IU_TOT/g), r2=Math.round((gTot||1)/g);
-  const rg=gcd(r1,r2);
-  document.getElementById('rbn-val').textContent=(r1/rg).toFixed(1)+' : '+(r2/rg).toFixed(1);
-
-  // axis B
-  let bMis=0,bBom=0,bDr=0;
-  AXIS_B.forEach(c=>{bMis+=c.missiles;bBom+=c.bombs;bDr+=c.drones;});
-  const a2Tot=bMis+bBom+bDr;
-  document.getElementById('a2-mis').textContent=bMis;
-  document.getElementById('a2-bom').textContent=bBom;
-  document.getElementById('a2-dr').textContent=bDr;
-  document.getElementById('a2-tot').textContent=a2Tot;
-
-  animNum(document.getElementById('hero-num'),a1Tot+a2Tot);
-  return {gBal,gCru,gDr,gTot,a1Tot,a2Tot,bMis,bBom,bDr};
+  animateNum(document.getElementById('il-us-total'), israelTotal);
 }
 
-function buildCharts(d) {
-  const ev=[
-    {l:'04/03 SA',b:2, c:23, dr:0},
-    {l:'08/03 BH',b:40,c:600,dr:0},
-    {l:'12/03 QA',b:50,c:45, dr:0},
-    {l:'14/03 SA',b:3, c:1,  dr:17},
-    {l:'19/03 SA',b:0, c:15, dr:15},
-  ];
-  new Chart(document.getElementById('ch-time'),{type:'bar',
-    data:{labels:ev.map(e=>e.l),datasets:[
-      {label:'باليستية',data:ev.map(e=>e.b),backgroundColor:'rgba(230,57,70,.8)',borderRadius:3,stack:'s'},
-      {label:'كروز',    data:ev.map(e=>e.c),backgroundColor:'rgba(244,162,97,.8)',borderRadius:3,stack:'s'},
-      {label:'مسيّرات', data:ev.map(e=>e.dr),backgroundColor:'rgba(76,201,240,.8)',borderRadius:3,stack:'s'},
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#6b7788',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'},stacked:true},
-              y:{ticks:{color:'#6b7788',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'},stacked:true}}}
-  });
-  new Chart(document.getElementById('ch-compare'),{type:'bar',
-    data:{labels:['إجمالي','صواريخ','مسيّرات'],
-      datasets:[
-        {label:'إيران',data:[d.a1Tot,d.gBal+IU_BAL,d.gDr+IU_DR],backgroundColor:'rgba(230,57,70,.8)',borderRadius:4},
-        {label:'أمريكا',data:[d.a2Tot,d.bMis,d.bDr],backgroundColor:'rgba(55,138,221,.8)',borderRadius:4},
-      ]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#6b7788',font:{size:10,family:'IBM Plex Sans Arabic'}},grid:{color:'rgba(255,255,255,.04)'}},
-              y:{ticks:{color:'#6b7788',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}}}}
-  });
-}
-
-function animNum(el,target,dur=1400){
-  const t0=performance.now();
-  (function tick(now){const p=Math.min((now-t0)/dur,1),e=1-Math.pow(1-p,3);
-    el.textContent=Math.round(target*e);if(p<1)requestAnimationFrame(tick);})(t0);
-}
-
-buildGulf(); buildAxisB();
-const d=calcAll();
-buildCharts(d);
+render();
 </script>
+
 </body>
 </html>
