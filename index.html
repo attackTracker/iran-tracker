@@ -322,7 +322,7 @@ footer {
     </div>
     <div class="hdr-right">
       <div class="day-counter" id="day-counter">اليوم —</div>
-      <div class="since-date">منذ 28 Feb 2026</div>
+      <div class="since-date" id="last-update">منذ 28 Feb 2026</div>
     </div>
   </div>
 </header>
@@ -487,38 +487,67 @@ footer {
 </footer>
 
 <script>
-// الأرقام إنجليزية
+const API_URL = 'https://iran-tracker-api.vercel.app/api/tweets?status=true';
+
 function toAr(n) {
   if (n === null || n === undefined) return '—';
   return n.toLocaleString('en-US');
 }
 
-// ── البيانات ──
-const DATA = {
-  sa: 631,   // 49 bal + 7 cru + 575 dr
-  kw: 766,   // 227 + 539
-  ae: 2093,  // 338 + 15 + 1740
-  bh: 385,   // 143 + 242
-  qa: 267,   // 180 + 87
-  om: 16,    // 16 dr
-  jo: 240,   // 140 + 100
-  il: 865,   // 365 + 500
-  us: 105,   // 25 + 80
+// ── البيانات الثابتة (fallback) ──
+const STATIC = {
+  sa: 631, kw: 766, ae: 2093, bh: 385,
+  qa: 267, om: 16,  jo: 240,  il: 865, us: 105,
 };
 
-const gulfKeys = ['sa','kw','ae','bh','qa','om','jo'];
-const gulfTotal = gulfKeys.reduce((s,k) => s + DATA[k], 0);
-const israelTotal = DATA.il + DATA.us;
-const grandTotal = gulfTotal + israelTotal;
+// map API account keys to local keys
+const KEY_MAP = {
+  modgovksa: 'sa', kuwaitarmyghq: 'kw', modgovae: 'ae',
+  bdf_bahrain: 'bh', mod_qatar: 'qa', mg_mod_oman: 'om',
+  Petranews: 'jo', IDF: 'il',
+};
+
+function sumData(d) {
+  if (!d) return null;
+  return (d.ballistic||0) + (d.cruise||0) + (d.drones||0);
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(API_URL);
+    const json = await res.json();
+    const DATA = { ...STATIC };
+    let hasLive = false;
+
+    if (json.results) {
+      Object.entries(json.results).forEach(([key, val]) => {
+        const localKey = KEY_MAP[key];
+        if (localKey && val.data) {
+          const s = sumData(val.data);
+          if (s && s > 0) { DATA[localKey] = s; hasLive = true; }
+        }
+      });
+    }
+
+    if (hasLive) {
+      setEl('last-update', 'بيانات مباشرة · Live data');
+    } else {
+      setEl('last-update', 'آخر تحديث: ٢٢ مارس ٢٠٢٦');
+    }
+    return DATA;
+  } catch(e) {
+    setEl('last-update', 'آخر تحديث: ٢٢ مارس ٢٠٢٦');
+    return STATIC;
+  }
+}
 
 // ── حساب اليوم ──
 const startDate = new Date('2026-02-28');
 const dayNum = Math.floor((Date.now() - startDate) / 86400000) + 1;
 document.getElementById('day-counter').textContent = 'اليوم ' + toAr(dayNum);
 
-// ── animate number ──
 function animateNum(el, target, duration) {
-  if (!el) return;
+  if (!el || !target) return;
   duration = duration || 1200;
   const start = performance.now();
   const step = (now) => {
@@ -535,12 +564,14 @@ function setEl(id, val) {
   if (el) el.textContent = val;
 }
 
-// ── render ──
-function render() {
-  // grand total
+function render(DATA) {
+  const gulfKeys = ['sa','kw','ae','bh','qa','om','jo'];
+  const gulfTotal = gulfKeys.reduce((s,k) => s + (DATA[k]||0), 0);
+  const israelTotal = (DATA.il||0) + (DATA.us||0);
+  const grandTotal = gulfTotal + israelTotal;
+
   animateNum(document.getElementById('grand-total'), grandTotal, 1600);
 
-  // split bar
   const gulfPct = Math.round(gulfTotal / grandTotal * 100);
   const israelPct = 100 - gulfPct;
 
@@ -553,21 +584,18 @@ function render() {
   setEl('israel-pct', israelPct + '%');
   setEl('gulf-num', toAr(gulfTotal) + ' مقذوف');
   setEl('israel-num', toAr(israelTotal) + ' مقذوف');
-
-  // section totals
   setEl('gulf-sec-total', 'إجمالي: ' + toAr(gulfTotal) + ' مقذوف');
   setEl('israel-sec-total', 'إجمالي: ' + toAr(israelTotal) + ' مقذوف');
 
-  // countries
-  const ids = ['sa','kw','ae','bh','qa','om','jo'];
-  ids.forEach(k => {
-    animateNum(document.getElementById(k + '-total'), DATA[k]);
-  });
-
+  gulfKeys.forEach(k => animateNum(document.getElementById(k + '-total'), DATA[k]));
   animateNum(document.getElementById('il-us-total'), israelTotal);
 }
 
-render();
+// تشغيل
+loadData().then(render);
+
+// تحديث تلقائي كل 30 دقيقة
+setInterval(() => loadData().then(render), 30 * 60 * 1000);
 </script>
 
 </body>
